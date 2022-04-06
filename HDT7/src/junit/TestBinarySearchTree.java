@@ -128,36 +128,63 @@ class TestBinarySearchTree {
         assertEquals(myBST.find("hola"), null);
         assertEquals(myBST.delete("f"), "ochenta");
         assertEquals(myBST.find("g"), "noventa");
+        assertEquals(myBST.isEmpty(), false);
+        
+	}
+	@Test
+	void testGetElements() {
+		BinarySearchTree<String, String> myBST = new BinarySearchTree<String, String>(new WordComparator<String>());
+        
+        assertEquals(true, myBST.isEmpty());
+        myBST.insert("10", "villarea");
+        myBST.insert("20", "cincuenta");
+        myBST.insert("30", "y");
+        myBST.insert("90", "cuatro");
+        myBST.insert("80", "doce");
+        myBST.insert("94302", "dolencia");
+        
+        assertEquals(myBST.getElements().get(0), "villarea");
 	}
 
-//	@Test
-//	void testCount() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testIsEmpty() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testGetElements() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testInOrder() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testPreOrder() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testPostOrder() {
-//		fail("Not yet implemented");
-//	}
+	@Test
+	void testInOrder() {
+BinarySearchTree<String, String> myBST = new BinarySearchTree<String, String>(new WordComparator<String>());
+        
+        assertEquals(true, myBST.isEmpty());
+
+        myBST.insert("30", "y");
+        myBST.insert("10", "villarea");
+        myBST.insert("20", "cincuenta");
+        myBST.insert("35", "oh");
+        myBST.insert("90", "cuatro");
+        myBST.insert("80", "doce");
+        myBST.insert("94302", "dolencia");
+        Route<String> miRecorrido1 = new Route<String>(); 
+        myBST.inOrder(miRecorrido1);
+        assertEquals(miRecorrido1.miLista.get(0),"villarea");
+        assertEquals(miRecorrido1.miLista.get(1),"cincuenta");
+        assertEquals(miRecorrido1.miLista.get(2),"y");
+        assertEquals(miRecorrido1.miLista.get(3),"oh");
+        assertEquals(miRecorrido1.miLista.get(4),"doce");
+        assertEquals(miRecorrido1.miLista.get(5),"cuatro");
+        assertEquals(miRecorrido1.miLista.get(6),"dolencia");
+        Route<String> miRecorrido2 = new Route<String>(); 
+        myBST.preOrder(miRecorrido2);
+        assertEquals(miRecorrido2.miLista.get(0),"y");
+        assertEquals(miRecorrido2.miLista.get(1),"villarea");
+        assertEquals(miRecorrido2.miLista.get(2),"cincuenta");
+        assertEquals(miRecorrido2.miLista.get(3),"oh");
+        assertEquals(miRecorrido2.miLista.get(4),"cuatro");
+        assertEquals(miRecorrido2.miLista.get(5),"doce");
+        assertEquals(miRecorrido2.miLista.get(6),"dolencia");
+        Route<String> miRecorrido3 = new Route<String>(); 
+        myBST.postOrder(miRecorrido3);
+        assertEquals(miRecorrido3.miLista.get(0),"cincuenta");
+        assertEquals(miRecorrido3.miLista.get(1),"villarea");
+        assertEquals(miRecorrido3.miLista.get(0),"cincuenta");
+        
+        
+        
+	}
 
 }
