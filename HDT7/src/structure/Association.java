@@ -13,21 +13,22 @@ public class Association<K, V> implements java.util.Map.Entry<K, V>{
 	@Override
 	public K getKey() {
 		// TODO Auto-generated method stub
-		this.map.getKey();
-		return null;
+		return this.map.getKey();
+		
 	}
 
 	@Override
 	public V getValue() {
 		// TODO Auto-generated method stub
-		this.map.getValue();
-		return null;
+		return this.map.getValue();
+		
 	}
 
 	@Override
 	public V setValue(V value) {
 		// TODO Auto-generated method stub
-		this.map.setValue(value);
 		return null;
 	}
+
+	
 }
