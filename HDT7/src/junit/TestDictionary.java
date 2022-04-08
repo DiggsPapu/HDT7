@@ -62,9 +62,11 @@ class TestDictionary {
 		dic1.getAssociations();
 		System.out.print("\n");
 		dic1.removeWord("4");
-		
+		dic1.addWord("true", "vrai", "Verdadero");
 		dic1.getAssociations();
 		dic1.removeWord("321");
+		dic1.changeWord("19", "DIEGO");
+		dic1.getAssociations();
 	}
 
 

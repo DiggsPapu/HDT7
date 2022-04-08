@@ -6,7 +6,10 @@ public class Diccionario {
 	private BinarySearchTree<String, String> frenchDic ;
 	private BinarySearchTree<String, String> englishDic ;
 	
-	
+	/**
+	 * 
+	 * @return BinarySearchTree<String, String>
+	 */
 	public BinarySearchTree<String, String> getFrenchDic() {
 		return frenchDic;
 	}
@@ -33,10 +36,10 @@ public class Diccionario {
 	}
 	
 	public String searchWord(String token) {
-		if (whatLanguage(token)==1) {
-			return frenchDic.find(token);
-		}else if (whatLanguage(token)==2) {
-			return englishDic.find(token);
+		if (whatLanguage(token.toLowerCase().trim() )==1) {
+			return frenchDic.find(token.toLowerCase().trim() );
+		}else if (whatLanguage(token.toLowerCase().trim() )==2) {
+			return englishDic.find(token.toLowerCase().trim() );
 		}else {
 			return null;
 		}
@@ -46,8 +49,8 @@ public class Diccionario {
 		
 		for (int k = 0 ; k < words.size() ; k++ ) {
 			ArrayList<String> list = words.get(k);
-			frenchDic.insert(list.get(2), list.get(1));
-			englishDic.insert(list.get(0), list.get(1));
+			frenchDic.insert(list.get(2).toLowerCase().trim(), list.get(1).toLowerCase().trim());
+			englishDic.insert(list.get(0).toLowerCase().trim(), list.get(1).toLowerCase().trim());
 		}
 	}
 	
@@ -61,29 +64,34 @@ public class Diccionario {
 		RouteAssociations<String, String> routeFrench = new RouteAssociations<>();
 		frenchDic.inOrder2(routeFrench);
 		System.out.print("\nFrench: ");
-		routeEnglish.showWalk();
+		routeFrench.showWalk();
 		
 	}
 	
-	public void changeWord(String englishKey, String newEnglish, String frenchKey, String newFrench) {
-		englishDic.delete(englishKey);
-		englishDic.insert(englishKey, newEnglish);
-		frenchDic.delete(frenchKey);
-		frenchDic.insert(frenchKey, newFrench);
+	public void changeWord(String englishKey, String newValue) {
+		
+		String old = englishDic.delete(englishKey.toLowerCase().trim() );
+		englishDic.insert(englishKey.toLowerCase().trim(), newValue.toLowerCase().trim() );
+		RouteAssociations<String, String> routeFrench = new RouteAssociations<>();
+		frenchDic.inOrder2(routeFrench);
+		
+		frenchDic.delete( getId(routeFrench, old.toLowerCase().trim() ) );
+		frenchDic.insert( getId(routeFrench, old.toLowerCase().trim()) , newValue.toLowerCase().trim() );
+		
 	}
 	public boolean wordExists(String token) {
-		if (frenchDic.find(token)!=null||englishDic.find(token)!=null) {
+		if (frenchDic.find(token.toLowerCase().trim() )!=null||englishDic.find(token.toLowerCase().trim() )!=null) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void addWord(String englishKey, String newEnglish, String frenchKey, String newFrench) {
-		if (wordExists(englishKey) && wordExists(frenchKey)) {
-			changeWord(englishKey, newEnglish, frenchKey, newFrench);
+	public void addWord(String englishKey, String frenchKey, String newValue) {
+		if (wordExists(englishKey.toLowerCase().trim() ) && wordExists(frenchKey.toLowerCase().trim() )) {
+			changeWord(englishKey.toLowerCase().trim(), newValue.toLowerCase().trim() );
 		}else {
-			englishDic.insert(englishKey, newEnglish);
-			frenchDic.insert(frenchKey, newFrench);
+			englishDic.insert(englishKey.toLowerCase().trim(), newValue.toLowerCase().trim() );
+			frenchDic.insert(frenchKey.toLowerCase().trim(), newValue.toLowerCase().trim() );
 		}
 	}
 	
@@ -93,9 +101,8 @@ public class Diccionario {
 		englishDic.inOrder2(associationsEnglish);
 		frenchDic.inOrder2(associationsFrench);
 		if (getId(associationsEnglish, value)!=null && getId(associationsFrench, value)!=null ) {
-			englishDic.delete(getId(associationsEnglish, value));
-			frenchDic.delete(getId(associationsFrench, value));
-			
+			englishDic.delete(getId(associationsEnglish, value.toLowerCase().trim() ));
+			frenchDic.delete(getId(associationsFrench, value.toLowerCase().trim() ));
 			
 		}else {
 			System.out.print("No se pudo eliminar\n");
@@ -106,7 +113,7 @@ public class Diccionario {
 	
 	private String getId(RouteAssociations<String, String> associations, String value) {
 		for (int k = 0 ; k < associations.miLista.size() ; k++) {
-			if (associations.miLista.get(k).getValue().equals(value)) {
+			if (associations.miLista.get(k).getValue().equals( value.toLowerCase().trim() )) {
 				return associations.miLista.get(k).getKey();
 			}
 		}
