@@ -179,7 +179,21 @@ public class BinarySearchTree<K, V> implements IBinarySearchTree<K, V> {
 		internalPostOrder(root, traversal);
 	}
 	
-
+	
+	public RouteAssociations<V,K> inOrder2(RouteAssociations<V,K> traversal) {
+		internalInOrder2(root, traversal);
+		return traversal;
+	}
+	private void internalInOrder2(TreeNode<K, V> actual, RouteAssociations<V,K> traversal) {
+		if (actual != null) {
+			internalInOrder2(actual.getLeft(), traversal);
+			Association<K,V> actualAssociation = new Association<K,V>(actual.getId(),actual.getValue());
+			traversal.Walk2(actualAssociation);
+			
+			internalInOrder2(actual.getRight(), traversal);
+		}
+	}
+	
 	private void internalInsert(TreeNode<K, V> actual, K id, V value) {
 		
 		int result = keyComparator.compare(actual.getId(), id);

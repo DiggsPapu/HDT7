@@ -3,8 +3,9 @@ package structure;
 import java.util.ArrayList;
 
 public class Diccionario {
-	BinarySearchTree<String, String> frenchDic ;
-	BinarySearchTree<String, String> englishDic ;
+	private BinarySearchTree<String, String> frenchDic ;
+	private BinarySearchTree<String, String> englishDic ;
+	
 	
 	public BinarySearchTree<String, String> getFrenchDic() {
 		return frenchDic;
@@ -19,7 +20,7 @@ public class Diccionario {
 		this.englishDic = new BinarySearchTree<String, String>(new WordComparator<String>());
 	}
 	
-	public int wordExists(String token) {
+	public int whatLanguage(String token) {
 		if (frenchDic.find(token)!=null) {
 			return 1;
 			
@@ -32,9 +33,9 @@ public class Diccionario {
 	}
 	
 	public String searchWord(String token) {
-		if (wordExists(token)==1) {
+		if (whatLanguage(token)==1) {
 			return frenchDic.find(token);
-		}else if (wordExists(token)==2) {
+		}else if (whatLanguage(token)==2) {
 			return englishDic.find(token);
 		}else {
 			return null;
@@ -48,10 +49,67 @@ public class Diccionario {
 			frenchDic.insert(list.get(2), list.get(1));
 			englishDic.insert(list.get(0), list.get(1));
 		}
-		
 	}
 	
 	
+	public void getAssociations() {
+		RouteAssociations<String, String> routeEnglish = new RouteAssociations<>();
+		englishDic.inOrder2(routeEnglish);
+		System.out.print("\nEnglish: ");
+		routeEnglish.showWalk();
+		
+		RouteAssociations<String, String> routeFrench = new RouteAssociations<>();
+		frenchDic.inOrder2(routeFrench);
+		System.out.print("\nFrench: ");
+		routeEnglish.showWalk();
+		
+	}
 	
+	public void changeWord(String englishKey, String newEnglish, String frenchKey, String newFrench) {
+		englishDic.delete(englishKey);
+		englishDic.insert(englishKey, newEnglish);
+		frenchDic.delete(frenchKey);
+		frenchDic.insert(frenchKey, newFrench);
+	}
+	public boolean wordExists(String token) {
+		if (frenchDic.find(token)!=null||englishDic.find(token)!=null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	public void addWord(String englishKey, String newEnglish, String frenchKey, String newFrench) {
+		if (wordExists(englishKey) && wordExists(frenchKey)) {
+			changeWord(englishKey, newEnglish, frenchKey, newFrench);
+		}else {
+			englishDic.insert(englishKey, newEnglish);
+			frenchDic.insert(frenchKey, newFrench);
+		}
+	}
 	
+	public void removeWord(String value) {
+		RouteAssociations<String, String> associationsFrench = new RouteAssociations<>();
+		RouteAssociations<String, String> associationsEnglish = new RouteAssociations<>();
+		englishDic.inOrder2(associationsEnglish);
+		frenchDic.inOrder2(associationsFrench);
+		if (getId(associationsEnglish, value)!=null && getId(associationsFrench, value)!=null ) {
+			englishDic.delete(getId(associationsEnglish, value));
+			frenchDic.delete(getId(associationsFrench, value));
+			
+			
+		}else {
+			System.out.print("No se pudo eliminar\n");
+		}
+			
+		
+	}
+	
+	private String getId(RouteAssociations<String, String> associations, String value) {
+		for (int k = 0 ; k < associations.miLista.size() ; k++) {
+			if (associations.miLista.get(k).getValue().equals(value)) {
+				return associations.miLista.get(k).getKey();
+			}
+		}
+		return null;
+	}
 }

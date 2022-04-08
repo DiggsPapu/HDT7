@@ -46,15 +46,25 @@ class TestDictionary {
 		dic1.loadDic(words1);
 		
 		for (int k = 1 ;  k < 10 ; k++) {
-			assertEquals(dic1.wordExists(String.valueOf(k*2+1)), 2);
-			assertEquals(dic1.searchWord(String.valueOf(k*2+1)), String.valueOf(k));
-			assertEquals(dic1.wordExists(String.valueOf(k*2)), 1);
-			assertEquals(dic1.searchWord(String.valueOf(k*2)), String.valueOf(k));
-			assertEquals(dic1.wordExists(String.valueOf(k*40)), 0);
 			
+			assertEquals(dic1.wordExists(String.valueOf(k*2+1)), true);
+			assertEquals(dic1.whatLanguage(String.valueOf(k*2+1)), 2);
+			assertEquals(dic1.searchWord(String.valueOf(k*2+1)), String.valueOf(k));
+			
+			assertEquals(dic1.wordExists(String.valueOf(k*2)), true);
+			assertEquals(dic1.whatLanguage(String.valueOf(k*2)), 1);
+			assertEquals(dic1.searchWord(String.valueOf(k*2)), String.valueOf(k));
+			
+			assertEquals(dic1.wordExists(String.valueOf(k*40)), false);
+			assertEquals(dic1.whatLanguage(String.valueOf(k*40)), 0);
+			assertEquals(dic1.searchWord(String.valueOf(k*40)), null);
 		}
+		dic1.getAssociations();
+		System.out.print("\n");
+		dic1.removeWord("4");
 		
-		
+		dic1.getAssociations();
+		dic1.removeWord("321");
 	}
 
 
