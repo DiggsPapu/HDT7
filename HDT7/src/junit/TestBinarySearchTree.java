@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import structure.BinarySearchTree;
 import structure.Route;
+import structure.RouteAssociations;
 import structure.WordComparator;
 
 class TestBinarySearchTree {
@@ -129,6 +130,29 @@ class TestBinarySearchTree {
         assertEquals(myBST.delete("f"), "ochenta");
         assertEquals(myBST.find("g"), "noventa");
         assertEquals(myBST.isEmpty(), false);
+        
+        BinarySearchTree<String, String> myBST2 = new BinarySearchTree<String, String>(new WordComparator<String>());
+        
+        assertEquals(true, myBST2.isEmpty());
+        
+        myBST2.insert("h", "seis");
+        myBST2.insert("i", "siete");
+        myBST2.insert("l", "nueve");
+        myBST2.insert("j", "ocho");
+        myBST2.insert("g", "cinco");
+        myBST2.insert("d", "tres");
+        myBST2.insert("a", "uno");
+        myBST2.insert("b", "dos");
+        myBST2.insert("e", "cuatro");
+        myBST2.insert("m", "diez");
+        myBST2.insert("v", "once");
+        
+        RouteAssociations<String,String> miRecorrido1 = new RouteAssociations<String, String>();
+        myBST2.delete("d");
+        myBST2.inOrder2(miRecorrido1);
+        miRecorrido1.showWalk();
+        System.out.print(myBST2.getElements().get(7));
+        myBST2.delete("h");
         
 	}
 	@Test

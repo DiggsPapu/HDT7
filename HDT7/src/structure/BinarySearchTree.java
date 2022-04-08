@@ -1,19 +1,33 @@
 package structure;
 import java.util.ArrayList;
 import java.util.Comparator;
+
+/**
+ * 
+ * @author Moises Alonso
+ * Este metodo es el usado por moises aunque yo le agregue dos metodos mas
+ * El metodo search in order 2 y el metodo inOrder2
+ * @param <K>
+ * @param <V>
+ */
 public class BinarySearchTree<K, V> implements IBinarySearchTree<K, V> {
 	
 	private int count;
 	private TreeNode<K, V> root;
 	private Comparator<K> keyComparator;
-	
+	/**
+	 * It's the BST constructor
+	 * @param _keyComparator
+	 */
 	public BinarySearchTree(Comparator<K> _keyComparator) {
 		this.keyComparator = _keyComparator;
 		root = null;
 		count = 0;
 	}
 	
-
+/**
+ * Insert with the id the value inside the BST
+ */
 	@Override
 	public void insert(K id, V value) {
 		
@@ -24,7 +38,9 @@ public class BinarySearchTree<K, V> implements IBinarySearchTree<K, V> {
 			internalInsert(root, id, value);
 		}
 	}
-
+	/**
+	 * Delete the node with the id
+	 */
 	@Override
 	public V delete(K id) {
 		if (!isEmpty()) {
@@ -138,22 +154,32 @@ public class BinarySearchTree<K, V> implements IBinarySearchTree<K, V> {
 		
 		return null;
 	}
-
+	
+	/**
+	 * Find the value with the id
+	 */
 	@Override
 	public V find(K id) {
 		return internalFind(root, id);
 	}
-
+	/**
+	 * Count the amount of values
+	 */
 	@Override
 	public int count() {
 		return count;
 	}
-
+	/**
+	 * It is empty
+	 */
 	@Override
 	public boolean isEmpty() {
 		return count == 0;
 	}
-
+	
+	/**
+	 * Get elements and returns an arrayList
+	 */
 	@Override
 	public ArrayList<V> getElements() {
 		ArrayList<V> list = new ArrayList<V>();
@@ -162,28 +188,45 @@ public class BinarySearchTree<K, V> implements IBinarySearchTree<K, V> {
 		
 		return list;
 	}
-
+	
+	/**
+	 * In Order it does not return something
+	 *   
+	 */
 	@Override
 	public void inOrder(ITreeTraversal<V> traversal) {
 		internalInOrder(root, traversal);
 	}
-
+	/**
+	 * Pre order 
+	 */
 	@Override
 	public void preOrder(ITreeTraversal<V> traversal) {
 		internalPreOrder(root, traversal);
 		
 	}
-
+	/**
+	 * Post order
+	 */
 	@Override
 	public void postOrder(ITreeTraversal<V> traversal) {
 		internalPostOrder(root, traversal);
 	}
 	
-	
+	/**
+	 * Method inOrder2 
+	 * @param traversal
+	 * @return
+	 */
 	public RouteAssociations<V,K> inOrder2(RouteAssociations<V,K> traversal) {
 		internalInOrder2(root, traversal);
 		return traversal;
 	}
+	/**
+	 * Method internalInOrder2
+	 * @param actual
+	 * @param traversal
+	 */
 	private void internalInOrder2(TreeNode<K, V> actual, RouteAssociations<V,K> traversal) {
 		if (actual != null) {
 			internalInOrder2(actual.getLeft(), traversal);
@@ -193,7 +236,12 @@ public class BinarySearchTree<K, V> implements IBinarySearchTree<K, V> {
 			internalInOrder2(actual.getRight(), traversal);
 		}
 	}
-	
+	/**
+	 * Internal Insert the method to insert in the tree 
+	 * @param actual 
+	 * @param id
+	 * @param value
+	 */
 	private void internalInsert(TreeNode<K, V> actual, K id, V value) {
 		
 		int result = keyComparator.compare(actual.getId(), id);
@@ -221,7 +269,11 @@ public class BinarySearchTree<K, V> implements IBinarySearchTree<K, V> {
 		}
 		
 	}
-	
+	/**
+	 * Internal in order to move in the tree in order and it appends in a Route class, where it will generate a list with the values in order.
+	 * @param actual
+	 * @param traversal
+	 */
 	private void internalInOrder(TreeNode<K, V> actual, ITreeTraversal<V> traversal) {
 		if (actual != null) {
 			internalInOrder(actual.getLeft(), traversal);
@@ -231,7 +283,11 @@ public class BinarySearchTree<K, V> implements IBinarySearchTree<K, V> {
 			internalInOrder(actual.getRight(), traversal);
 		}
 	}
-	
+	/**
+	 * Internal Pre Order 
+	 * @param actual
+	 * @param traversal
+	 */
 	private void internalPreOrder(TreeNode<K, V> actual, ITreeTraversal<V> traversal) {
 		if (actual != null) {
 			traversal.Walk(actual.getValue());
@@ -252,7 +308,12 @@ public class BinarySearchTree<K, V> implements IBinarySearchTree<K, V> {
 			traversal.Walk(actual.getValue());
 		}
 	}
-	
+	/**
+	 * Method to find inside the tree a value
+	 * @param actual
+	 * @param id
+	 * @return
+	 */
 	private V internalFind(TreeNode<K, V> actual, K id) {
 		if (actual != null) {
 			int result = keyComparator.compare(actual.getId(), id);
@@ -269,7 +330,11 @@ public class BinarySearchTree<K, V> implements IBinarySearchTree<K, V> {
 			return null;
 		}
 	}
-	
+	/**
+	 * Method to get elements
+	 * @param list
+	 * @param actual
+	 */
 	private void internalGetElements(ArrayList<V> list, TreeNode<K, V> actual) {
 		if (actual != null) {
 			internalGetElements(list, actual.getLeft());

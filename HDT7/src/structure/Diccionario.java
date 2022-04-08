@@ -7,22 +7,32 @@ public class Diccionario {
 	private BinarySearchTree<String, String> englishDic ;
 	
 	/**
-	 * 
+	 * This method is for get the french dictionary
 	 * @return BinarySearchTree<String, String>
 	 */
 	public BinarySearchTree<String, String> getFrenchDic() {
 		return frenchDic;
 	}
-
+	/**
+	 * this method is for get the english dictionary
+	 * @return BinarySearchTree<String, String>
+	 */
 	public BinarySearchTree<String, String> getEnglishDic() {
 		return englishDic;
 	}
-
+	
+	/**
+	 * It's a method dictionary, it initialized BST 4 french and english
+	 */
 	public Diccionario() {
 		this.frenchDic = new BinarySearchTree<String, String>(new WordComparator<String>());
 		this.englishDic = new BinarySearchTree<String, String>(new WordComparator<String>());
 	}
-	
+	/**
+	 * Method to define what language it is, french or english
+	 * @param token
+	 * @return 
+	 */
 	public int whatLanguage(String token) {
 		if (frenchDic.find(token)!=null) {
 			return 1;
@@ -34,7 +44,11 @@ public class Diccionario {
 			return 0;
 		}
 	}
-	
+	/**
+	 * Method to search word in the dictionary.
+	 * @param token
+	 * @return
+	 */
 	public String searchWord(String token) {
 		if (whatLanguage(token.toLowerCase().trim() )==1) {
 			return frenchDic.find(token.toLowerCase().trim() );
@@ -44,7 +58,11 @@ public class Diccionario {
 			return null;
 		}
 	}
-	
+	/**
+	 * Method to load the dictionary associations
+	 * 
+	 * @param words
+	 */
 	public void loadDic(ArrayList<ArrayList<String>> words) {
 		
 		for (int k = 0 ; k < words.size() ; k++ ) {
@@ -54,7 +72,9 @@ public class Diccionario {
 		}
 	}
 	
-	
+	/**
+	 * GetAssociations 
+	 */
 	public void getAssociations() {
 		RouteAssociations<String, String> routeEnglish = new RouteAssociations<>();
 		englishDic.inOrder2(routeEnglish);
@@ -67,7 +87,11 @@ public class Diccionario {
 		routeFrench.showWalk();
 		
 	}
-	
+	/**
+	 * Method change word so we ask for the new value and the english key to change. 
+	 * @param englishKey is a string
+	 * @param newValue is a string
+	 */
 	public void changeWord(String englishKey, String newValue) {
 		
 		String old = englishDic.delete(englishKey.toLowerCase().trim() );
@@ -79,6 +103,12 @@ public class Diccionario {
 		frenchDic.insert( getId(routeFrench, old.toLowerCase().trim()) , newValue.toLowerCase().trim() );
 		
 	}
+	
+	/**
+	 * Word Exists 
+	 * @param token
+	 * @return
+	 */
 	public boolean wordExists(String token) {
 		if (frenchDic.find(token.toLowerCase().trim() )!=null||englishDic.find(token.toLowerCase().trim() )!=null) {
 			return true;
@@ -86,6 +116,12 @@ public class Diccionario {
 			return false;
 		}
 	}
+	/**
+	 * Add word, is to add a new word to the french, english and the new value
+	 * @param englishKey
+	 * @param frenchKey
+	 * @param newValue
+	 */
 	public void addWord(String englishKey, String frenchKey, String newValue) {
 		if (wordExists(englishKey.toLowerCase().trim() ) && wordExists(frenchKey.toLowerCase().trim() )) {
 			changeWord(englishKey.toLowerCase().trim(), newValue.toLowerCase().trim() );
@@ -94,7 +130,10 @@ public class Diccionario {
 			frenchDic.insert(frenchKey.toLowerCase().trim(), newValue.toLowerCase().trim() );
 		}
 	}
-	
+	/**
+	 * Remove a word it is the method to remove a word
+	 * @param value
+	 */
 	public void removeWord(String value) {
 		RouteAssociations<String, String> associationsFrench = new RouteAssociations<>();
 		RouteAssociations<String, String> associationsEnglish = new RouteAssociations<>();
@@ -110,7 +149,12 @@ public class Diccionario {
 			
 		
 	}
-	
+	/**
+	 * GetId is the method to get the id 
+	 * @param associations
+	 * @param value
+	 * @return
+	 */
 	private String getId(RouteAssociations<String, String> associations, String value) {
 		for (int k = 0 ; k < associations.miLista.size() ; k++) {
 			if (associations.miLista.get(k).getValue().equals( value.toLowerCase().trim() )) {
