@@ -6,7 +6,7 @@ import java.util.Comparator;
  * 
  * @author Moises Alonso
  * Este metodo es el usado por moises aunque yo le agregue dos metodos mas
- * El metodo search in order 2 y el metodo inOrder2
+ * El metodo search in order 2 y el metodo inOrder2 (metodos de moises)
  * @param <K>
  * @param <V>
  */
